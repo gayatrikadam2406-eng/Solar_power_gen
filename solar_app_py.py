@@ -10,6 +10,7 @@ Original file is located at
 import streamlit as st
 import pandas as pd
 import joblib
+print("Joblib Installed Successfully")
 
 # Load model and encoder
 model = joblib.load("solar_model.pkl")
