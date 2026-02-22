@@ -17,6 +17,7 @@ import pandas as pd
 model = joblib.load("Solar_power_gen037.pkl")
 
 st.title("☀️ Solar Power Generation Prediction")
+st.write(model.feature_names_in_)
 
 st.write("Enter weather details to predict solar power generation.")
 
