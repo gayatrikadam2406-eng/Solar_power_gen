@@ -24,6 +24,7 @@ sky_cover = st.number_input("Sky Cover", 0, 10)
 distance_noon = st.number_input("Distance to Solar Noon", 0.0, 1.0)
 is_daylight = st.selectbox("Is Daylight", encoder["Is Daylight"].classes_)
 
+
 df = pd.DataFrame({
     "Average Temperature (Day)": [temperature],
     "Average Wind Speed (Day)": [wind_speed],
