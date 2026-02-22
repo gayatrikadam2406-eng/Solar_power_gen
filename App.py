@@ -36,18 +36,16 @@ is_daylight = st.selectbox("Is Daylight?", [0, 1])
 # ==============================
 # Create Input DataFrame
 # ==============================
-
-input_data = pd.DataFrame([[
-    average_temperature,
-    average_wind_speed,
-    sky_cover,
-    relative_humidity,
-    visibility,
-    distance_to_solar_noon,
-    average_barometric_pressure,
-    is_daylight
-]], columns=model.feature_names_in_)
-
+input_data = pd.DataFrame([{
+    "Average Temperature (Day)": average_temperature,
+    "Average Wind Speed (Day)": average_wind_speed,
+    "Sky Cover": sky_cover,
+    "Relative Humidity": relative_humidity,
+    "Visibility": visibility,
+    "Distance to Solar Noon": distance_to_solar_noon,
+    "Average Barometric Pressure (Period)": average_barometric_pressure,
+    "Is Daylight": is_daylight
+}])
 # ==============================
 # Prediction
 # ==============================
