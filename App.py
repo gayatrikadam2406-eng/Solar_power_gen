@@ -8,37 +8,51 @@ Original file is located at
 """
 
 import streamlit as st
-import pandas as pd
 import joblib
+import pandas as pd
 
-# Load model and encoder
+# ==============================
+# Load Trained Model
+# ==============================
 model = joblib.load("Solar_power_gen037.pkl")
-encoder = joblib.load("label_encoder.pkl")
 
-st.title("Solar Power Prediction")
+st.title("☀️ Solar Power Generation Prediction")
 
-# Inputs
-temperature = st.number_input("Average Temperature (Day)", -10.0, 50.0)
-wind_speed = st.number_input("Average Wind Speed (Day)", 0.0, 50.0)
-sky_cover = st.number_input("Sky Cover", 0, 10)
-distance_noon = st.number_input("Distance to Solar Noon", 0.0, 1.0)
-is_daylight = st.selectbox("Is Daylight", encoder["Is Daylight"].classes_)
+st.write("Enter weather details to predict solar power generation.")
 
+# ==============================
+# User Inputs
+# ==============================
 
-df = pd.DataFrame({
-    "Average Temperature (Day)": [temperature],
-    "Average Wind Speed (Day)": [wind_speed],
-    "Sky Cover": [sky_cover],
-    "Distance to Solar Noon": [distance_noon],
-    "Is Daylight": [is_daylight]
-})
+average_temperature = st.number_input("Average Temperature (Day)", format="%.2f")
+average_wind_speed = st.number_input("Average Wind Speed (Day)", format="%.2f")
+sky_cover = st.number_input("Sky Cover")
+relative_humidity = st.number_input("Relative Humidity", format="%.2f")
+visibility = st.number_input("Visibility", format="%.2f")
+distance_to_solar_noon = st.number_input("Distance to Solar Noon", format="%.2f")
+average_barometric_pressure = st.number_input("Average Barometric Pressure (Period)", format="%.2f")
+is_daylight = st.selectbox("Is Daylight?", [0, 1])
+
+# ==============================
+# Create Input DataFrame
+# ==============================
+
+input_data = pd.DataFrame([[
+    average_temperature,
+    average_wind_speed,
+    sky_cover,
+    relative_humidity,
+    visibility,
+    distance_to_solar_noon,
+    average_barometric_pressure,
+    is_daylight
+]], columns=model.feature_names_in_)
+
+# ==============================
+# Prediction
+# ==============================
 
 if st.button("Predict"):
+    prediction = model.predict(input_data)[0]
 
-    for col in encoder.keys():
-        if col in df.columns:
-            df[col] = encoder[col].transform(df[col])
-
-    prediction = model.predict(df)
-
-    st.write("Predicted Power Generated:", round(prediction[0], 2))
+    st.success(f"⚡ Predicted Solar Power Generation: {prediction:.2f}")
