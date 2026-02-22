@@ -12,7 +12,7 @@ import pandas as pd
 import joblib
 
 # Load model and encoder
-model = joblib.load("solar_model.pkl")
+model = joblib.load("Solar_power_gen037.pkl")
 encoder = joblib.load("label_encoder.pkl")
 
 st.title("Solar Power Prediction")
